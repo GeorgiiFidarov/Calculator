@@ -10,12 +10,7 @@ public class Main {
             String result = calc(input);
             System.out.println("Результат: " + result);
             scan.close();
-
-
-
     }
-
-
     //Для возможности расширения класса можно вынести операции в отдельные сущности
     private static String calc(String input) throws Exception {
         int result;
