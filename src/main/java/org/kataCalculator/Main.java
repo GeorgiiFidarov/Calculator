@@ -15,6 +15,8 @@ public class Main {
     /**
      * Данный класс подготоваливает
      * данные перед отправкой на подсчет
+     *
+     * @isArabic переменная является индикатором определяющим арабские цифры
      */
     private static String calc(String input) throws Exception {
         int result;
@@ -93,6 +95,7 @@ public class Main {
             String operand1 = tokens[0];
             String operator = tokens[1];
             String operand2 = tokens[2];
+
             boolean isArabic = operand1.matches("[1-9]|10") && operand2.matches("[1-9]|10");
             boolean isRoman = operand1.matches("[IVXLCDM]+") && operand2.matches("[IVXLCDM]+");
             if (!(isArabic || isRoman) || (isArabic && isRoman)) {
