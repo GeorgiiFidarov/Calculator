@@ -1,39 +1,38 @@
 package org.kataCalculator;
+
 import java.util.Scanner;
 public class Main {
     private static final String ARAB_REGEX = "[1-9]|10";
     private static final String ROMAN_REGEX = "[IVXLCDM]+";
 
     public static void main(String[] args) throws Exception {
-            Scanner scan = new Scanner(System.in);
-            String input = scan.nextLine();
-            String result = calc(input);
-            System.out.println("Результат: " + result);
-            scan.close();
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        String result = calc(input);
+        System.out.println("Результат: " + result);
+        scan.close();
     }
-    //Для возможности расширения класса можно вынести операции в отдельные сущности
+    //Данный класс подготоваливает данные перед отправкой на подсчет
     private static String calc(String input) throws Exception {
         int result;
         String[] tokens = input.split(" ");
         CustomCalculatorException.Validate(tokens);
+
         String operand1 = tokens[0];
         String operator = tokens[1];
         String operand2 = tokens[2];
 
-        boolean isArabic = operand1.matches(ARAB_REGEX)&& operand2.matches(ARAB_REGEX);
+        boolean isArabic =
+                operand1.matches(ARAB_REGEX)&&
+                operand2.matches(ARAB_REGEX);
+
         int num1 = isArabic ? Integer.parseInt(operand1) : Convertor.romanToArabic(operand1);
         int num2 = isArabic ? Integer.parseInt(operand2) : Convertor.romanToArabic(operand2);
 
-        switch (operator) {
-            case "+" -> result = num1 + num2;
-            case "-" -> result = num1 - num2;
-            case "*" -> result = num1 * num2;
-            case "/" -> result = num1 / num2;
-            default -> throw new CustomCalculatorException("Недопустимый оператор");
-        }
+        result = SimpleMathOperations.Operations(num1,num2,operator);
+
         return isArabic ? Integer.toString(result) : Convertor.arabicToRoman(result);
     }
-
     //Utility класс конвертор вынесен в отдельную логику удобен для расширения и использования
     private static class Convertor{
         private static int romanToArabic(String s) {
@@ -97,6 +96,18 @@ public class Main {
                     operator.equals("-")
             ){
                 throw new CustomCalculatorException("В римской системе нет отрицательных чисел");
+            }
+        }
+    }
+    //Основная логика расчета вынесена в отдельный класс
+    private static class SimpleMathOperations{
+        private static int Operations(int num1, int num2,String operator) throws CustomCalculatorException {
+            switch (operator) {
+                case "+" -> {return num1 + num2;}
+                case "-" -> {return num1 - num2;}
+                case "*" -> {return num1 * num2;}
+                case "/" -> {return num1 / num2;}
+                default -> throw new CustomCalculatorException("Недопустимый оператор");
             }
         }
     }
