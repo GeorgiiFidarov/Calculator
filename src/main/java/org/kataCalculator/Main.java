@@ -12,7 +12,10 @@ public class Main {
         System.out.println("Результат: " + result);
         scan.close();
     }
-    //Данный класс подготоваливает данные перед отправкой на подсчет
+    /**
+     * Данный класс подготоваливает
+     * данные перед отправкой на подсчет
+     */
     private static String calc(String input) throws Exception {
         int result;
         String[] tokens = input.split(" ");
@@ -24,7 +27,7 @@ public class Main {
 
         boolean isArabic =
                 operand1.matches(ARAB_REGEX)&&
-                operand2.matches(ARAB_REGEX);
+                        operand2.matches(ARAB_REGEX);
 
         int num1 = isArabic ? Integer.parseInt(operand1) : Convertor.romanToArabic(operand1);
         int num2 = isArabic ? Integer.parseInt(operand2) : Convertor.romanToArabic(operand2);
@@ -33,7 +36,10 @@ public class Main {
 
         return isArabic ? Integer.toString(result) : Convertor.arabicToRoman(result);
     }
-    //Utility класс конвертор вынесен в отдельную логику удобен для расширения и использования
+    /**
+     * Utility класс конвертор вынесен в отдельную
+     * логику удобен для расширения и использования
+     */
     private static class Convertor{
         private static int romanToArabic(String s) {
             int ans = 0, num = 0;
@@ -70,7 +76,9 @@ public class Main {
             return sb.toString();
         }
     }
-    //Обработка ошибок вынесена из логики
+    /**
+     * Обработка ошибок вынесена из логики
+     */
     private static class CustomCalculatorException extends Exception {
         private CustomCalculatorException(String message) {
             super(message);
@@ -99,7 +107,9 @@ public class Main {
             }
         }
     }
-    //Основная логика расчета вынесена в отдельный класс
+    /**
+     * Основная логика расчета вынесена в отдельный класс
+     */
     private static class SimpleMathOperations{
         private static int Operations(int num1, int num2,String operator) throws CustomCalculatorException {
             switch (operator) {
