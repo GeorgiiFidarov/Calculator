@@ -84,13 +84,18 @@ public class Main {
                                 "Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)"));
             }
             String operand1 = tokens[0];
+            String operator = tokens[1];
             String operand2 = tokens[2];
             boolean isArabic = operand1.matches("[1-9]|10") && operand2.matches("[1-9]|10");
             boolean isRoman = operand1.matches("[IVXLCDM]+") && operand2.matches("[IVXLCDM]+");
             if (!(isArabic || isRoman) || (isArabic && isRoman)) {
                 throw new CustomCalculatorException("Используются одновременно разные системы счисления");
             }
-            if (Convertor.romanToArabic(operand1)-Convertor.romanToArabic(operand2)<=0 && operand1.matches(ROMAN_REGEX) && operand2.matches(ROMAN_REGEX)){
+            if (Convertor.romanToArabic(operand1)-Convertor.romanToArabic(operand2)<=0 &&
+                    operand1.matches(ROMAN_REGEX) &&
+                    operand2.matches(ROMAN_REGEX) &&
+                    operator.equals("-")
+            ){
                 throw new CustomCalculatorException("В римской системе нет отрицательных чисел");
             }
         }
